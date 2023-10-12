@@ -1,11 +1,11 @@
 class SourceResponse {
-
   String? status;
   List<Sources>? sources;
 
   SourceResponse({
-      this.status, 
-      this.sources,});
+    this.status,
+    this.sources,
+  });
 
   SourceResponse.fromJson(dynamic json) {
     status = json['status'];
@@ -16,14 +16,9 @@ class SourceResponse {
       });
     }
   }
-
-
-
-
 }
 
 class Sources {
-
   String? id;
   String? name;
   String? description;
@@ -33,13 +28,14 @@ class Sources {
   String? country;
 
   Sources({
-      this.id, 
-      this.name, 
-      this.description, 
-      this.url, 
-      this.category, 
-      this.language, 
-      this.country,});
+    this.id,
+    this.name,
+    this.description,
+    this.url,
+    this.category,
+    this.language,
+    this.country,
+  });
 
   Sources.fromJson(dynamic json) {
     id = json['id'];
@@ -50,8 +46,4 @@ class Sources {
     language = json['language'];
     country = json['country'];
   }
-
-
-
-
 }

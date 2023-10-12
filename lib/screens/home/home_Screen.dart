@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
             IconButton(icon:const Icon( Icons.search,size: 38,),onPressed: (){},)
           ] : null,
         ),
-        body: model == null ? CategoryScreen(onCategoryClicked: onCategoryClick,) :NewsScreen() ,
+        body: model == null ? CategoryScreen(onCategoryClicked: onCategoryClick,) :NewsScreen(CategoryId: model!.id ) ,
       )  ,
     );
   }
