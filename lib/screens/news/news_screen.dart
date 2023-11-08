@@ -6,6 +6,7 @@ class NewsScreen extends StatefulWidget {
   const NewsScreen({super.key, this.CategoryId});
   final String? CategoryId;
   static const String routeName = 'news';
+
   @override
   State<NewsScreen> createState() => _NewsScreenState();
 }
@@ -28,6 +29,7 @@ class _NewsScreenState extends State<NewsScreen> {
 
           return Column(
             children: [
+              const SizedBox(height: 8),
               SourseTitle(
                 sources: sources,
                 index: curantSelect,

@@ -1,13 +1,19 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:news/models/Sourseresponse.dart';
 import 'package:news/screens/news/widget/source_item.dart';
+import 'package:news/screens/news_details/news_details.dart';
 import 'package:news/shared/network/remote/api_manager.dart';
+
+import '../../../models/NewsDataModel.dart';
+import '../../../shared/component/constants.dart';
 
 class SourseTitle extends StatefulWidget {
   SourseTitle({super.key, required this.sources, required this.index});
   final List<Sources> sources;
   int index;
+
   @override
   State<SourseTitle> createState() => _SourseTitleState();
 }
@@ -15,6 +21,7 @@ class SourseTitle extends StatefulWidget {
 class _SourseTitleState extends State<SourseTitle> {
   @override
   Widget build(BuildContext context) {
+    var mediaQuery = MediaQuery.of(context).size;
     return Expanded(
       child: Column(
         children: [
@@ -48,24 +55,41 @@ class _SourseTitleState extends State<SourseTitle> {
               return Expanded(
                 child: ListView.separated(
                   itemCount: artical.length,
-                  itemBuilder: (context, index) => Container(
-                      margin: const EdgeInsets.only(
-                          top: 8, left: 8, right: 8, bottom: 10),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          border:
-                              Border.all(width: 1.5, color: Colors.deepOrange)),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(16),
+                  itemBuilder: (context, index) => InkWell(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(NewDetails.routeName,
+                          arguments: NewsDetails(
+                              articl: artical[index], index: index));
+                    },
+                    child: Container(
+                        margin: const EdgeInsets.only(
+                            top: 8, left: 8, right: 8, bottom: 10),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                                width: 1.5, color: Colors.deepOrange)),
                         child: Column(
                           children: [
-                            Image.network(
-                              artical[index].urlToImage ??
-                                  'https://fluttergems.dev/media-cards/flutter_svprogresshud.png',
-                              height: 300,
-                              width: double.infinity,
-                              fit: BoxFit.cover,
-                              scale: 1.0,
+                            ClipRRect(
+                              borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(16),
+                                  topRight: Radius.circular(16)),
+                              child: Hero(
+                                tag: 'image$index',
+                                child: CachedNetworkImage(
+                                  height: mediaQuery.height * 0.25,
+                                  width: double.infinity,
+                                  fit: BoxFit.fill,
+                                  imageUrl: artical[index].urlToImage ?? '',
+                                  placeholder: (context, url) => const Center(
+                                    child: CircularProgressIndicator(
+                                      color: Constants.primaryColorLight,
+                                    ),
+                                  ),
+                                  errorWidget: (context, url, error) =>
+                                      const Center(child: Icon(Icons.error)),
+                                ),
+                              ),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -97,8 +121,8 @@ class _SourseTitleState extends State<SourseTitle> {
                               ),
                             ),
                           ],
-                        ),
-                      )),
+                        )),
+                  ),
                   separatorBuilder: (BuildContext context, int index) =>
                       const SizedBox(
                     height: 0,
@@ -111,4 +135,11 @@ class _SourseTitleState extends State<SourseTitle> {
       ),
     );
   }
+}
+
+class NewsDetails {
+  final Articles articl;
+  final int index;
+
+  NewsDetails({required this.articl, required this.index});
 }

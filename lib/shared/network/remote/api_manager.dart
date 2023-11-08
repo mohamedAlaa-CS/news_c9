@@ -29,4 +29,14 @@ class ApiManager {
     NewsDataModel newsDataModel = NewsDataModel.fromJson(jsonData);
     return newsDataModel;
   }
+
+  static Future<NewsDataModel> searchData(String? query) async {
+    Uri url = Uri.https(Constants.BASE_URL, '/v2/everything',
+        {'apiKey': Constants.API_KEY, 'q': query});
+
+    var response = await http.get(url);
+    var jsonData = jsonDecode(response.body);
+    NewsDataModel newsDataModel = NewsDataModel.fromJson(jsonData);
+    return newsDataModel;
+  }
 }

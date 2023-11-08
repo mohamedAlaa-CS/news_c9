@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 class ApplicationTheme {
   static const Color primaryColor = Color(0xff39A552);
   static ThemeData myTheme = ThemeData(
-      scaffoldBackgroundColor: Colors.transparent,
+      //scaffoldBackgroundColor: Colors.transparent,
       appBarTheme: AppBarTheme(
           color: primaryColor,
           shape: const RoundedRectangleBorder(
